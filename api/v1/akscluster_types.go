@@ -1,0 +1,77 @@
+/*
+Copyright 2024.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+package v1
+
+import (
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
+// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+
+// AKSClusterSpec defines the desired state of AKSCluster
+type AKSClusterSpec struct {
+	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+	// Important: Run "make" to regenerate code after modifying this file
+
+	// Foo is an example field of AKSCluster. Edit akscluster_types.go to remove/update
+	Name              string `json:"name,omitempty"`
+	ResourceGroup     string `json:"resourceGroup,omitempty"`
+	Location          string `json:"location,omitempty"`
+	NodeCount         int    `json:"nodeCount,omitempty"`
+	NodeSize          string `json:"nodeSize,omitempty"`
+	KubernetesVersion string `json:"kubernetesVersion,omitempty"`
+	AutoScaling       bool   `json:"autoScaling,omitempty"`
+	MinNodeCount      int    `json:"minNodeCount,omitempty"`
+	MaxNodeCount      int    `json:"maxNodeCount,omitempty"`
+	DNSPrefix         string `json:"dnsPrefix,omitempty"`
+}
+
+// AKSClusterStatus defines the observed state of AKSCluster
+type AKSClusterStatus struct {
+	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+	// Important: Run "make" to regenerate code after modifying this file
+	ClusterID         string `json:"clusterID,omitempty"`
+	ProvisioningState string `json:"provisioningState,omitempty"`
+	NodeCount         int    `json:"nodeCount,omitempty"`
+	Kubeconfig        string `json:"kubeconfig,omitempty"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+
+// AKSCluster is the Schema for the aksclusters API
+type AKSCluster struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   AKSClusterSpec   `json:"spec,omitempty"`
+	Status AKSClusterStatus `json:"status,omitempty"`
+}
+
+// +kubebuilder:object:root=true
+
+// AKSClusterList contains a list of AKSCluster
+type AKSClusterList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []AKSCluster `json:"items"`
+}
+
+func init() {
+	SchemeBuilder.Register(&AKSCluster{}, &AKSClusterList{})
+}

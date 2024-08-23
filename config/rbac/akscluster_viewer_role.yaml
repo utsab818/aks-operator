@@ -1,0 +1,23 @@
+# permissions for end users to view aksclusters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: aks-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: akscluster-viewer-role
+rules:
+- apiGroups:
+  - azure.utsabazure.com
+  resources:
+  - aksclusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - azure.utsabazure.com
+  resources:
+  - aksclusters/status
+  verbs:
+  - get
